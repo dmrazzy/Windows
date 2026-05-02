@@ -448,7 +448,7 @@ rem Gihosoft TubeGet
 reg add "HKCU\Software\Gihosoft\TubeGet" /v "DefaultOutputFolder" /t REG_SZ /d "Z:/Temp" /f
 reg add "HKCU\Software\Gihosoft\TubeGet" /v "DownloadTempFolder" /t REG_SZ /d "Z:/TEMP/Gihosoft/temp" /f
 
-rem LibreWolf's spam
+rem LibreWolf's spam - https://ibb.co/TDqSwnhf
 rd "%AppData%\Librewolf\Profiles\n632hgaj.default-default\extensions" /s /q
 
 rem Notepad
