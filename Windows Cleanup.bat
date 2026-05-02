@@ -160,7 +160,7 @@ pause
 
 rem Uninstall reinstalled MS Apps
 rem C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe  "Get-AppxPackage -AllUsers -PackageTypeFilter Bundle  | Where-Object {$_.NonRemovable -eq $False} | Select-Object Name, PackageFullName"
-start "" /wait C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe "Get-AppxPackage -AllUsers -PackageTypeFilter Bundle -Name "MicrosoftWindows.Client.WebExperience" | Remove-AppxPackage -AllUsers"
+rem start "" /wait C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe "Get-AppxPackage -AllUsers -PackageTypeFilter Bundle -Name "MicrosoftWindows.Client.WebExperience" | Remove-AppxPackage -AllUsers"
 
 rem Open Explorer - Choose the desired View - View - Options - View - Apply to Folders - OK - Close/Restart Explorer ASAP
 reg delete "HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags" /f
@@ -191,19 +191,17 @@ taskkill /im msedge.exe /f
 taskkill /im tor.exe /f
 
 rd "D:\OneDrive\Soft\Brave" /s /q
-rd "D:\OneDrive\Soft\Chromium" /s /q
 rd "D:\OneDrive\Soft\Edge" /s /q
 rd "D:\OneDrive\Soft\Librewolf" /s /q
 
 xcopy "%LocalAppData%\BraveSoftware\Brave-Browser\User Data" "D:\OneDrive\Soft\Brave" /s /i /y
-xcopy "%LocalAppData%\Chromium\User Data" "D:\OneDrive\Soft\Chromium" /s /i /y
 xcopy "%LocalAppData%\Microsoft\Edge" "D:\OneDrive\Soft\Edge" /s /i /y
 xcopy "%AppData%\Librewolf" "D:\OneDrive\Soft\Librewolf" /s /i /y
 
 rem Backup Custom Settings
 xcopy "%AppData%\MPC-BE\mpc-be64.ini" "D:\OneDrive\Setup\Users\Tairi\AppData\Roaming\MPC-BE\mpc-be64.ini" /y
 xcopy "%AppData%\Rizonesoft\Notepad3\Notepad3.ini" "D:\OneDrive\Setup\Users\Tairi\AppData\Roaming\Rizonesoft\Notepad3\Notepad3.ini" /y
-xcopy "%AppData%\SystemInformer\settings.xml" "D:\OneDrive\Setup\Users\Tairi\AppData\Roaming\SystemInformer\settings.xml" /y
+xcopy "%AppData%\SystemInformer\settings.json" "D:\OneDrive\Setup\Users\Tairi\AppData\Roaming\SystemInformer\settings.json" /y
 xcopy "%AppData%\Wise Disk Cleaner\Config.ini" "D:\OneDrive\Setup\Users\Tairi\AppData\Roaming\Wise Disk Cleaner\Config.ini" /y
 xcopy "%AppData%\Wise Disk Cleaner\exclusions.dat" "D:\OneDrive\Setup\Users\Tairi\AppData\Roaming\Wise Disk Cleaner\exclusions.dat" /y
 xcopy "%AppData%\Wise Registry Cleaner\Config.ini" "D:\OneDrive\Setup\Users\Tairi\AppData\Roaming\Wise Registry Cleaner\Config.ini" /y
@@ -219,9 +217,7 @@ start "" /wait "%ProgramFiles%\Kingston_SSD_Manager\KSM_Gen15.exe"
 
 rem Create System Backup
 sc config "HasleoBackupSuiteService" start= demand
-sc config "HasleoImageMountService" start= demand
 net start "HasleoBackupSuiteService"
-net start "HasleoImageMountService"
 start "" /wait "C:\Program Files\Hasleo\Hasleo Backup Suite\bin\BackupMainUI.exe"
 
 pause
