@@ -29,7 +29,7 @@ rem reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\DataCollect
 rem bcdedit /set flightsigning on
 rem bcdedit /set {bootmgr} flightsigning on
 
-rem https://www.deskmodder.de/blog/2026/04/11/windows-11-29565-iso-esd-deutsch-english
+rem https://www.deskmodder.de/blog/2026/05/02/windows-11-29580-iso-esd-deutsch-english/
 rem https://www.businessinsider.com/programmatic-ads-overtake-email-top-malware-vector-the-media-trust-2026-3
 rem https://github.com/garlin-cant-code/SecureBoot-CA-2023-Updates/releases
 rem https://www.forbes.com/sites/thomasbrewster/2026/01/22/microsoft-gave-fbi-keys-to-unlock-bitlocker-encrypted-data
@@ -113,6 +113,7 @@ rem Windows ISO
 rem https://os.click
 rem https://genuine-iso-verifier.weebly.com
 rem https://massgrave.dev/genuine-installation-media.html
+rem https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
 
 rem Check ISO Windows versions and build version
 rem dism /Get-WimInfo /WimFile:F:\sources\install.wim
@@ -915,8 +916,9 @@ reg add "HKLM\System\CurrentControlSet\Control\WMI\Autologger\DiagLog" /v "Start
 reg add "HKLM\System\CurrentControlSet\Control\WMI\Autologger\Diagtrack-Listener" /v "Start" /t REG_DWORD /d "0" /f
 reg add "HKLM\System\CurrentControlSet\Control\WMI\Autologger\WiFiSession" /v "Start" /t REG_DWORD /d "0" /f
 
-rem Enable Native NVMe / https://www.deskmodder.de/blog/2025/12/18/windows-11-auch-mit-nativer-nvme-unterstuetzung
-rem https://www.elevenforum.com/t/announcing-native-nvme-in-windows-server-2025.43018/page-2#post-687585
+rem Enable Native NVMe / https://www.elevenforum.com/t/announcing-native-nvme-in-windows-server-2025.43018/page-2#post-687585
+reg add "HKLM\System\CurrentControlSet\Control\SafeBoot\Minimal\nvmedisk" /ve /t REG_SZ /d "Service" /f
+reg add "HKLM\System\CurrentControlSet\Control\SafeBoot\Network\nvmedisk" /ve /t REG_SZ /d "Service" /f
 reg add "HKLM\System\CurrentControlSet\Policies\Microsoft\FeatureManagement\Overrides" /v "156965516" /t REG_DWORD /d "1" /f
 reg add "HKLM\System\CurrentControlSet\Policies\Microsoft\FeatureManagement\Overrides" /v "735209102" /t REG_DWORD /d "1" /f
 reg add "HKLM\System\CurrentControlSet\Policies\Microsoft\FeatureManagement\Overrides" /v "1853569164" /t REG_DWORD /d "1" /f
@@ -929,6 +931,7 @@ rem =================================== Windows Policies =======================
 rem Microsoft 365 URLs and IP address ranges / Privacy and Telemetry 
 rem https://learn.microsoft.com/en-us/microsoft-365/enterprise/urls-and-ip-address-ranges?view=o365-worldwide
 rem https://learn.microsoft.com/en-us/windows/privacy/manage-connections-from-windows-operating-system-components-to-microsoft-services
+rem https://learn.microsoft.com/en-us/windows/privacy/manage-windows-11-endpoints
 rem https://learn.microsoft.com/en-us/windows/client-management/new-in-windows-mdm-enrollment-management#whatsnew11
 rem https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-configuration-service-provider
 rem https://learn.microsoft.com/en-us/windows/security/operating-system-security/device-management/windows-security-configuration-framework/windows-security-baselines
@@ -1174,10 +1177,6 @@ reg add "HKLM\System\CurrentControlSet\Services\NlaSvc\Parameters\Internet" /v "
 rem Disable PerfTrack (tracking of responsiveness events)
 reg add "HKLM\Software\Policies\Microsoft\Windows\WDI\{9c5a40da-b965-4fc3-8781-88dd50a6299d}" /v "ScenarioExecutionEnabled" /t REG_DWORD /d "0" /f
 
-rem 1 - Disable Recall Snapshots
-reg add "HKCU\Software\Policies\Microsoft\Windows\WindowsAI" /v "DisableAIDataAnalysis" /t REG_DWORD /d "1" /f
-reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsAI" /v "DisableAIDataAnalysis" /t REG_DWORD /d "1" /f
-
 rem 1000000000000 - Block untrusted fonts and log events / 2000000000000 - Do not block untrusted fonts / 3000000000000 - Log events without blocking untrusted fonts
 reg add "HKLM\Software\Policies\Microsoft\Windows NT\MitigationOptions" /v "MitigationOptions_FontBocking" /t REG_SZ /d "1000000000000" /f
 
@@ -1361,9 +1360,6 @@ rem reg add "HKLM\Software\Policies\Microsoft\Edge" /v "UserDataDir" /t REG_SZ /
 
 rem 1 - Allow video capture
 reg add "HKLM\Software\Policies\Microsoft\Edge" /v "VideoCaptureAllowed" /t REG_DWORD /d "0" /f
-
-rem 1 - Wallet Donation Enabled
-reg add "HKLM\Software\Policies\Microsoft\Edge" /v "WalletDonationEnabled" /t REG_DWORD /d "0" /f
 
 rem 1 - Enable User Web App Install From Browser
 reg add "HKLM\Software\Policies\Microsoft\Edge" /v "WebAppInstallByUserEnabled" /t REG_DWORD /d "0" /f
@@ -1608,23 +1604,23 @@ reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "19" /t REG
 reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "20" /t REG_SZ /d "[*.]myanimelist.net" /f
 reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "21" /t REG_SZ /d "[*.]nextdns.io" /f
 reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "22" /t REG_SZ /d "[*.]mbank.sk" /f
-reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "23" /t REG_SZ /d "" /f
-reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "24" /t REG_SZ /d "" /f
-reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "25" /t REG_SZ /d "" /f
-reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "26" /t REG_SZ /d "" /f
+reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "23" /t REG_SZ /d "[*.]tipli.sk" /f
+rem reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "24" /t REG_SZ /d "[*.]" /f
+rem reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "25" /t REG_SZ /d "[*.]" /f
+rem reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "26" /t REG_SZ /d "[*.]" /f
 reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "27" /t REG_SZ /d "[*.]softpedia.com" /f
 reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "28" /t REG_SZ /d "[*.]steamcommunity.com" /f
 reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "29" /t REG_SZ /d "[*.]steampowered.com" /f
 reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "30" /t REG_SZ /d "[*.]archive.org" /f
-reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "31" /t REG_SZ /d "" /f
-reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "32" /t REG_SZ /d "" /f
+rem reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "31" /t REG_SZ /d "[*.]" /f
+rem reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "32" /t REG_SZ /d "[*.]" /f
 reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "33" /t REG_SZ /d "[*.]vk.com" /f
 reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "34" /t REG_SZ /d "[*.]wilderssecurity.com" /f
 reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "35" /t REG_SZ /d "[*.]goodreads.com" /f
 reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "36" /t REG_SZ /d "[*.]ce-tescoassets.com" /f
 reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "37" /t REG_SZ /d "[*.]allegro.sk" /f
-reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "38" /t REG_SZ /d "[*.]" /f
-reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "39" /t REG_SZ /d "[*.]" /f
+rem reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "38" /t REG_SZ /d "[*.]" /f
+rem reg add "HKLM\Software\Policies\Microsoft\Edge\SaveCookiesOnExit" /v "39" /t REG_SZ /d "[*.]" /f
 
 rem Diagnostic Data / 0 - Off / 1 - RequiredData / 2 - OptionalData
 reg add "HKLM\Software\Policies\Microsoft\Edge" /v "DiagnosticData" /t REG_DWORD /d "0" /f
@@ -2716,12 +2712,14 @@ rem 0 - Disable Widgets
 reg add "HKCU\Software\Microsoft\PolicyManager\default\NewsAndInterests\AllowNewsAndInterests" /v "value" /t REG_DWORD /d "0" /f
 reg add "HKLM\Software\Policies\Microsoft\Dsh" /v "AllowNewsAndInterests" /t REG_DWORD /d "0" /f
 
-rem 1 - Disable Copilot
+rem 1 - Disable AI/Copilot / https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-windowsai
 reg add "HKCU\Software\Policies\Microsoft\Windows\WindowsCopilot" /v "RemoveMicrosoftCopilotApp" /t REG_DWORD /d "1" /f
 reg add "HKCU\Software\Policies\Microsoft\Windows\WindowsCopilot" /v "TurnOffWindowsCopilot" /t REG_DWORD /d "1" /f
 reg add "HKCU\Software\Microsoft\Windows\Shell\Copilot" /v "CopilotDisabledReason" /t REG_SZ /d "FeatureIsDisabled" /f
 reg add "HKCU\Software\Microsoft\Windows\Shell\Copilot" /v "IsCopilotAvailable" /t REG_DWORD /d "0" /f
 reg add "HKCU\Software\Microsoft\Windows\Shell\Copilot\BingChat" /v "IsUserEligible" /t REG_DWORD /d "0" /f
+reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsAI" /v "AllowRecallEnablement" /t REG_DWORD /d "0" /f
+reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsAI" /v "AllowRecallExport" /t REG_DWORD /d "0" /f
 reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsAI" /v "DisableAIDataAnalysis" /t REG_DWORD /d "1" /f
 reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsCopilot" /v "RemoveMicrosoftCopilotApp" /t REG_DWORD /d "1" /f
 reg add "HKLM\Software\Policies\Microsoft\Windows\WindowsCopilot" /v "TurnOffWindowsCopilot" /t REG_DWORD /d "1" /f
@@ -3396,7 +3394,6 @@ reg add "HKU\.DEFAULT\Control Panel\Keyboard" /v "InitialKeyboardIndicators" /t 
 rem =================================== Windows Settings ===================================
 rem ------------------------------------ Windows Update ------------------------------------
 rem ................................... Advanced options ...................................
-
 
 rem Adjust active hours / 0 - Manually / 1 - Automatically
 reg add "HKLM\Software\Microsoft\WindowsUpdate\UX\Settings" /v "SmartActiveHoursState" /t REG_DWORD /d "0" /f
